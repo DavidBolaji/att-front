@@ -73,31 +73,6 @@ const MainPage = () => {
     fileRef.current.click();
   }, [fileRef]);
 
-  const uploadButton = useMemo(
-    () => (
-      <Button
-        onClick={handleUpload}
-        className="text-white bg-green-300 -mt-10 mb-5"
-      >
-        Upload CSV
-      </Button>
-    ),
-    [handleUpload]
-  );
-
-  const addUserButton = useMemo(
-    () => (
-      <Button
-        className="text-white bg-green-300 -mt-10 mb-5"
-        onClick={() => setShow((prev) => !prev)}
-      >
-        <input type={"file"} ref={fileRef} hidden onChange={extractCSV} />
-        Add Users
-      </Button>
-    ),
-    [fileRef]
-  );
-
   return (
     <main
       className={`mt-5 max-w-[70vw] text-gray-500 rounded-md left-0 transition duration-300 ease-in-out z-0 ${
@@ -111,20 +86,21 @@ const MainPage = () => {
         </h1>
 
         <div className="flex items-center justify-end gap-5 mt-4 mb-10">
-          {uploadButton}
-          {addUserButton}
+          <Button
+            onClick={handleUpload}
+            className="text-white bg-green-300 -mt-10 mb-5"
+          >
+            Upload CSV
+          </Button>
         </div>
-        {show ? (
-          <>
-            <div
-              onClick={() => setShow(false)}
-              className="font-semibold w-full text-[24px] ml-auto absolute left-full top-[60px] -translate-x-12 cursor-pointer"
-            >
-              x
-            </div>
-            <SignUpForm />
-          </>
-        ) : undefined}
+
+        <>
+          <input type={"file"} ref={fileRef} hidden onChange={extractCSV} />
+          <h2 className="text-xl font-semibold text-gray-900 mb-5">
+            Add User Form
+          </h2>
+          <SignUpForm />
+        </>
       </div>
     </main>
   );

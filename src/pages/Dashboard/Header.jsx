@@ -32,9 +32,7 @@ const Header = ({ isOpen, handleToggle }) => {
           </button>
         </div>
         {/* Add header content here */}
-        <div className="flex items-center justify-end pr-2">
-          <p className="text-gray-500">Welcome, John Doe</p>
-        </div>
+        <div className="flex items-center justify-end pr-2"></div>
       </div>
     </div>
   );
