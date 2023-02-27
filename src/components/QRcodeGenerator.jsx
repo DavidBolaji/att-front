@@ -10,7 +10,6 @@ function QRCodeGenerator() {
   const generateQR = () => {
     // axios.get('/user')
     const user = JSON.parse(localStorage.getItem("user"));
-    console.log(user);
     const link = `https://checkuser.com?id=${user._id}&email=${user?.email}`;
     setText(link);
   };

@@ -1,0 +1,51 @@
+/* .ant-form-item-label { 
+  position: relative;
+  top: 25px;
+  color: #fff;
+  width: 33.33333333%;
+}
+
+:where(
+    .css-dev-only-do-not-override-3n0g1w
+  ).ant-input-textarea-show-count::after {
+  color: #fff !important;
+  margin-top: 5px;
+}
+
+.ant-form-item-control-wrapper {
+  width: 66.66666667%;
+  display: inline-flex;
+  line-height: normal;
+}
+
+.container {
+  text-align: center;
+  padding: 20px;
+  width: 100%;
+}
+
+.form-container {
+  margin: 0 auto;
+  width: 100%;
+  text-align: left;
+  margin-top: 20px;
+}
+
+.field-container {
+  height: 65px;
+}
+
+.submit-container {
+  text-align: center;
+  margin-top: 25px;
+}
+
+.submit-container button {
+  background-color: #b7076b !important;
+  width: 100%;
+  color: #fff;
+}
+
+.hidden {
+  visibility: hidden;
+} */

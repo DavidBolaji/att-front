@@ -1,6 +1,7 @@
 // Sidebar.js
 
 import { Link, NavLink } from "react-router-dom";
+import { Disclosure, Transition } from "@headlessui/react";
 // import { XIcon } from "@heroicons/react/outline";
 function Sidebar({ isOpen, handleToggle }) {
   return (
@@ -39,7 +40,7 @@ function Sidebar({ isOpen, handleToggle }) {
               </svg>
               Dashboard
             </NavLink>
-            <NavLink
+            {/* <NavLink
               to="attendance"
               className={`group flex items-center px-2 py-2 text-sm font-medium text-gray-900 rounded-md hover:bg-gray-50 ${({
                 isActive,
@@ -59,9 +60,55 @@ function Sidebar({ isOpen, handleToggle }) {
                   d="M13 10V3L4 14h7v7l9-11h-7z"
                 />
               </svg>
-              Attendance
-            </NavLink>
-            <NavLink
+              Users
+            </NavLink> */}
+            <Disclosure as={"div"}>
+              <div className="group flex items-center px-2 py-2 text-sm font-medium text-gray-900 rounded-md hover:bg-gray-50">
+                <Disclosure.Button className={"w-full flex items-center"}>
+                  <svg
+                    className="w-6 h-6 text-green-600 mr-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M13 10V3L4 14h7v7l9-11h-7z"
+                    />
+                  </svg>
+                  Users
+                </Disclosure.Button>
+              </div>
+              <Transition
+                enter="transition duration-100 ease-out"
+                enterFrom="transform scale-95 opacity-0"
+                enterTo="transform scale-100 opacity-100"
+                leave="transition duration-75 ease-out"
+                leaveFrom="transform scale-100 opacity-100"
+                leaveTo="transform scale-95 opacity-0"
+              >
+                <div className="group pl-12 text-sm font-medium text-gray-900 rounded-md">
+                  <Disclosure.Panel
+                    className={
+                      "flex items-center mb-3 p-1 cursor-pointer text-sm font-medium text-gray-900 rounded-md hover:bg-gray-50"
+                    }
+                  >
+                    <NavLink to={"view_users"}> view users</NavLink>
+                  </Disclosure.Panel>
+                  <Disclosure.Panel
+                    className={
+                      "flex items-center mb-3 p-1 cursor-pointer text-sm font-medium text-gray-900 rounded-md hover:bg-gray-50"
+                    }
+                  >
+                    <NavLink to={"attendance"}>users Attendance</NavLink>
+                  </Disclosure.Panel>
+                </div>
+              </Transition>
+            </Disclosure>
+            {/* <NavLink
               to="user"
               className="group flex items-center px-2 py-2 text-sm font-medium text-gray-900 rounded-md hover:bg-gray-50"
             >
@@ -79,8 +126,8 @@ function Sidebar({ isOpen, handleToggle }) {
                   d="M15 12a3 3 0 11-6 0 3 3 0 016 0zM3 20v-2a2 2 0 012-2h14a2 2 0 012 2v2"
                 />
               </svg>
-              Users
-            </NavLink>
+              Attendance
+            </NavLink> */}
             <NavLink
               to="logout"
               className="group flex items-center px-2 py-2 text-sm font-medium text-gray-900 rounded-md hover:bg-gray-50"

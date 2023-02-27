@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import AuthContext from "../store/AuthContext";
 import InputComponent from "./Input/InputComponent";
 import { Link } from "react-router-dom";
+import { message } from "antd";
 
 const LoginComponent = () => {
   const [email, setEmail] = useState("");
@@ -12,6 +13,7 @@ const LoginComponent = () => {
   const [emailTouched, setEmailTouched] = useState(false);
   const [passTouched, setPassTouched] = useState(false);
   const [formValid, setFormValid] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
   const ctx = useContext(AuthContext);
 
@@ -45,8 +47,10 @@ const LoginComponent = () => {
   };
 
   const handleSubmit = async (e) => {
+    message.loading();
     e.preventDefault();
     if (formValid) {
+      // setLoading((prev) => !prev);
       // TODO: submit the login form to the server
       const res = await ctx.onLogin(email, password);
       if (res) {
@@ -126,7 +130,7 @@ const LoginComponent = () => {
                     : "bg-green-400 cursor-not-allowed"
                 } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500`}
               >
-                Sign in
+                {isLoading && <Spin />} Sign in
               </button>
             </div>
           </form>

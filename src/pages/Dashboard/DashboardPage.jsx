@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Outlet, useNavigation } from "react-router-dom";
+import Layout from "../../components/Layout";
 import { LoaderComponent } from "../../components/LoaderComponent";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
@@ -8,13 +9,16 @@ function DashboardPage() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const navigation = useNavigation();
   // console.log(isDrawerOpen);
-  const isLoading = navigation.state === "loading";
 
   const handleToggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
 
-  return (
+  return navigation.state === "loading" ? (
+    <div className="w-full h-screen flex items-center justify-center">
+      <Layout />
+    </div>
+  ) : (
     <div className="h-screen flex overflow-hidden bg-gray-100">
       {/* Side drawer */}
       <Sidebar isOpen={isDrawerOpen} handleToggle={handleToggleDrawer} />
@@ -26,7 +30,6 @@ function DashboardPage() {
 
           {/* Main content */}
           <Outlet context={[isDrawerOpen, setIsDrawerOpen]} />
-          {isLoading ? <LoaderComponent /> : undefined}
         </div>
       </div>
     </div>

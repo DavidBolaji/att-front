@@ -5,7 +5,10 @@ if(import.meta.env.VITE_ENV === 'prod') {
 }
 
 const Axios = axios.create({
-    baseURL: url
+    baseURL: url,
+    headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem('token'))}`
+    }
 })
 
 export default Axios;

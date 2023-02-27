@@ -15,7 +15,6 @@ export const ContextAttendance = (props) => {
 
   const getAttendanceContext = async (email, password) => {
     const req = await getUserAttendance();
-    console.log(req);
     //   setUser(req.u);
     //   setToken(req.token);
     //   localStorage.setItem("user", JSON.stringify(req.user));

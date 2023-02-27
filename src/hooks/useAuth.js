@@ -30,7 +30,6 @@ export default useAuth;
 
 export function checkAuth() {
     const token = JSON.parse(localStorage.getItem('token'))
-    console.log(token)
     if(!token) {
         return redirect('/')
     }
