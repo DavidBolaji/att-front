@@ -1,8 +1,7 @@
 import { Button, message } from "antd";
-import React, { useCallback, useMemo, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import Axios from "../api/auth";
-import { SignUpForm } from "../components/Form/SignUpForm";
 import * as XLSX from "xlsx";
 let newData;
 const postData = async (url, data) => {
@@ -99,7 +98,6 @@ const MainPage = () => {
           <h2 className="text-xl font-semibold text-gray-900 mb-5">
             Add User Form
           </h2>
-          <SignUpForm />
         </>
       </div>
     </main>
