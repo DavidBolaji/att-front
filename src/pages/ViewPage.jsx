@@ -93,9 +93,11 @@ const ViewPage = () => {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    setUser([...users.user]);
-    setLoading((prev) => !prev);
-    setTotal(users.total);
+    if (users) {
+      setUser([...users?.user]);
+      setLoading((prev) => !prev);
+      setTotal(users?.total);
+    }
   }, []);
 
   // const [user, setUser] = useState([]);
@@ -173,10 +175,18 @@ export default ViewPage;
 export async function loader() {
   try {
     const response = await Axios.get("/user/all");
-    return {
-      user: response.data.docs,
-      total: response.data.totalDocs,
-    };
+    console.log(response);
+    if (response.status === 200) {
+      return {
+        user: response.data.docs,
+        total: response.data.totalDocs,
+      };
+    } else {
+      return {
+        user: [],
+        total: 0,
+      };
+    }
   } catch (error) {
     return error;
   }

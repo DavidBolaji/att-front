@@ -16,12 +16,11 @@ import { LoaderComponent } from "./components/LoaderComponent";
 const router = createBrowserRouter([
   { path: "/", element: <LoginPage /> },
   { path: "/register", element: <RegisterPage /> },
-  { path: ":id", element: <CardPage />, loader: cardUserLoader },
+  { path: "/:id", element: <CardPage />, loader: cardUserLoader },
   {
     path: "/dashboard",
     element: <DashboardPage />,
     loader: checkAuth,
-    errorElement: <LoaderComponent />,
     children: [
       { path: "", element: <MainPage /> },
       { path: "user", element: <UserPage /> },
