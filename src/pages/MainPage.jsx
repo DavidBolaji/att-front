@@ -1,9 +1,12 @@
-import { Button, message } from "antd";
+import { Button, Collapse, message } from "antd";
 import React, { useCallback, useRef, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import Axios from "../api/auth";
 import * as XLSX from "xlsx";
+import RegistrationFormComponent from "../components/RegistrationForm/RegistrationFormComponent";
+const { Panel } = Collapse;
 let newData;
+
 const postData = async (url, data) => {
   let count = 0;
   for (const item of data) {
@@ -95,9 +98,18 @@ const MainPage = () => {
 
         <>
           <input type={"file"} ref={fileRef} hidden onChange={extractCSV} />
-          <h2 className="text-xl font-semibold text-gray-900 mb-5">
-            Add User Form
-          </h2>
+
+          <Collapse
+            bordered={false}
+            defaultActiveKey={["1"]}
+            // expandIcon={({ isActive }) => (
+            //   <CaretRightOutlined rotate={isActive ? 90 : 0} />
+            // )}
+          >
+            <Panel header="Add User" key="1">
+              <RegistrationFormComponent />
+            </Panel>
+          </Collapse>
         </>
       </div>
     </main>

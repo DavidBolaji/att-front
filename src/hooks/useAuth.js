@@ -13,11 +13,13 @@ const useAuth = () => {
     }
   };
 
-  const register = async (email, password) => {
+  const register = async (obj) => {
     try {
-      const response = await Axios.post("/user/register", { email, password });
+      const response = await Axios.post("/user/register", obj);
+      console.log(response)
       return response.data;
     } catch (error) {
+      console.log(error)
       return error;
     }
   };
