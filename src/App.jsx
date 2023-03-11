@@ -12,6 +12,7 @@ import LogoutPage from "./pages/LogoutPage";
 import CardPage, { loader as cardUserLoader } from "./pages/CardPage";
 import ViewPage, { loader as viewUserLoader } from "./pages/ViewPage";
 import { LoaderComponent } from "./components/LoaderComponent";
+import ViewUsersCard from "./pages/ViewUsersCard";
 
 const router = createBrowserRouter([
   { path: "/", element: <LoginPage /> },
@@ -32,6 +33,12 @@ const router = createBrowserRouter([
       {
         path: "attendance",
         element: <AttendancePage />,
+        // loader: attendanceLoader,
+      },
+      {
+        path: "card",
+        element: <ViewUsersCard />,
+        loader: viewUserLoader,
         // loader: attendanceLoader,
       },
       { path: "logout", element: <LogoutPage /> },

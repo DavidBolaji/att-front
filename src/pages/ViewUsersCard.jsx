@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useLoaderData, useOutletContext } from "react-router-dom";
 import Axios from "../api/auth";
 
-const ViewPage = () => {
+const ViewUsersCard = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useOutletContext();
   const users = useLoaderData();
   const columns = [
@@ -21,24 +21,24 @@ const ViewPage = () => {
       className: "px-4 py-2",
       render: (text, record, index) => <span>{record.firstName} {record.lastName}</span>,
     },
-    // {
-    //   title: "Email",
-    //   dataIndex: "email",
-    //   key: "email",
-    //   className: "px-4 py-2",
-    // },
-    // {
-    //   title: "Phone",
-    //   dataIndex: "phone",
-    //   key: "phone",
-    //   className: "px-4 py-2",
-    // },
-    // {
-    //   title: "Address",
-    //   dataIndex: "address",
-    //   key: "address",
-    //   className: "px-4 py-2",
-    // },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      className: "px-4 py-2",
+    },
+    {
+      title: "Phone",
+      dataIndex: "phone",
+      key: "phone",
+      className: "px-4 py-2",
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
+      key: "address",
+      className: "px-4 py-2",
+    },
     {
       title: "QR",
       dataIndex: "qr",
@@ -52,7 +52,7 @@ const ViewPage = () => {
             Generate QR
           </Button>
         ) : (
-          <QRCode value={obj.qr} />
+          <QRCode value={obj.qr} size={60} />
         ),
     },
     // {
@@ -104,38 +104,24 @@ const ViewPage = () => {
   // const [user, setUser] = useState([]);
   // console.log(isDrawerOpen);
 
-  const fetchData = async (page, pageSize) => {
-    // This is where you would make an API call to fetch data for the current page and page size
-    // You can update the `dataSource` and `pagination` state variables based on the response
-    !loading && setLoading((prev) => !prev);
-    // Example API call using fetch:
-    const req = await Axios.get(
-      `user/all?page=${page}&limit=${pageSize}&search=${search}`
-    );
-    console.log(req);
-    if (req.status) {
-      setUser([...req.data.docs]);
-      setLoading((prev) => !prev);
-      setTotal(req.data.totalDocs);
-    } else {
-      console.log("Something went wrong");
-    }
-  };
+//   const fetchData = async (page, pageSize) => {
+//     // This is where you would make an API call to fetch data for the current page and page size
+//     // You can update the `dataSource` and `pagination` state variables based on the response
+//     !loading && setLoading((prev) => !prev);
+//     // Example API call using fetch:
+//     const req = await Axios.get(
+//       `user/all`
+//     );
+//     console.log(req);
+//     if (req.status) {
+//       setUser([...req.data.docs]);
+//       setLoading((prev) => !prev);
+//       setTotal(req.data.totalDocs);
+//     } else {
+//       console.log("Something went wrong");
+//     }
+//   };
 
-  async function handleTableChange(pagination) {
-    console.log("changed");
-    setCurrentPage(pagination.current);
-    setPageSize(pagination.pageSize);
-    await fetchData(pagination.current, pagination.pageSize);
-  }
-
-  const pagination = {
-    current: currentPage,
-    pageSize: pageSize,
-    total: total,
-    showSizeChanger: true,
-    pageSizeOptions: ["10", "20", "30", "40", "50"],
-  };
   return (
     <main
       className={`mt-5 max-w-[70vw] text-gray-500 rounded-md left-0 transition duration-300 ease-in-out z-0 ${
@@ -143,23 +129,17 @@ const ViewPage = () => {
       } `}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-        userPage
+        userCard
         <div className="max-w-screen-xl mx-auto">
           <div className="flex flex-col mt-2">
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
               <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                 <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                   {/* <Skeleton active={isLoading} className="px-10 py-5"> */}
-                  <Table
-                    columns={columns}
-                    dataSource={[...user]}
-                    pagination={pagination}
-                    onChange={handleTableChange}
-                    //   loading={isLoading}
-                    size="sm"
-                    rowKey="qr"
-                  />
-
+                  {users?.user?.map(user => <div key={user.id}>
+                    <QRCode value={user.qr}  />
+                    <p>{user.firstName} {user.lastName}</p>
+                  </div>)}
                   {/* </Skeleton> */}
                 </div>
               </div>
@@ -171,11 +151,11 @@ const ViewPage = () => {
   );
 };
 
-export default ViewPage;
+export default ViewUsersCard;
 
 export async function loader() {
   try {
-    const response = await Axios.get("/user/all");
+    const response = await Axios.get("/user/all2");
     console.log(response);
     if (response.status === 200) {
       return {
