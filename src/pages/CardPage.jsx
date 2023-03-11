@@ -21,7 +21,7 @@ const CardPage = () => {
       <Mastercard
         value={user.qr}
         cardNumber="**** **** **** 1234"
-        name={user.name}
+        name={`${user.firstName} ${user.lastName}`}
         expiryDate="12/22"
       />
     </div>

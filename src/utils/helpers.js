@@ -9,11 +9,17 @@ const timeToWord = (isoDate) => {
   return dateToWord;
 };
 
+const getTimeFromDateStr = (dateStr) => {
+  const dateObj = new Date(dateStr);
+  const time = format(dateObj, 'h:mm:ss a');
+  return time;
+}
+
 
 function iterateObjectsWithDates(objArray, dateArray) {
   return objArray.map((obj) => {
     return dateArray.map((date) => {
-      return { ...obj, [date]: obj.attendance.some(e => timeToWord(e.createdAt) === date) ? 'present' : 'absent' };
+      return { ...obj, [date]: obj.attendance.some(e => timeToWord(e.createdAt) === date) ? obj.attendance.map(e => getTimeFromDateStr(e.createdAt))[0] : '_' };
     });
   }).flat();
 }
@@ -39,16 +45,19 @@ export const exportToExcel = (ite, newCol) => {
   const resultHeader = [];
   const dates = [];
   let count = 4
+  console.log(newCol)
+
 
   ite.forEach(el => {
     resultHeader.push(el.title);
   });
 
-  for(let v = 4; v < resultHeader.length; v++) {
+  for(let v = 3; v < resultHeader.length; v++) {
     dates.push(resultHeader[v])
   }
-  
+
   const dataToExport1 = iterateObjectsWithDates(newCol, dates).map(({ attendance, _v, ...rest }) => rest);
+  console.log(dataToExport1)
   const dataToExport = mergeUsers(dataToExport1).map(({ attendance, _v, _id, ...rest }) => rest);  
   const ws = XLSX.utils.json_to_sheet(dataToExport);
   const wb = { Sheets: { data: ws }, SheetNames: ["data"] };

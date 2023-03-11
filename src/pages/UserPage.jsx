@@ -110,7 +110,7 @@ const UserPage = () => {
     pageSize: pageSize,
     total: total,
     showSizeChanger: true,
-    pageSizeOptions: ["10", "20", "30", "40", "50"],
+    pageSizeOptions: ["10", "20", "30", "40", "50", "200"],
   };
   return (
     <main

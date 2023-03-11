@@ -18,6 +18,13 @@ const AttendanceTable = ({ users, pagination, onChange }) => {
 
     toast.success("QR generated Succesfully");
   };
+
+  const getTimeFromDateStr = (dateStr) => {
+    const dateObj = new Date(dateStr);
+    const time = format(dateObj, 'h:mm:ss a');
+    return time;
+  }
+
   const timeToWord = (isoDate) => {
     const parsedDate = parseISO(isoDate);
     const dateWithoutTime = formatISO(parsedDate, { representation: "date" });
@@ -40,7 +47,9 @@ const AttendanceTable = ({ users, pagination, onChange }) => {
   }
 
   function getAttendanceColumns(userData) {
+    console.log(userData)
     const dates = getUniqueDates(userData);
+    console.log(dates)
     return dates.map((date) => ({
       title: date,
       dataIndex: "date",
@@ -48,8 +57,8 @@ const AttendanceTable = ({ users, pagination, onChange }) => {
       render: (_, obj) => (
         <>
           {obj?.attendance.some((dat) => timeToWord(dat.createdAt) === date)
-            ? "present"
-            : "absent"}
+            ? obj?.attendance.map(dat => getTimeFromDateStr(dat.createdAt))
+            : "_"}
         </>
       ),
     }));
@@ -94,28 +103,13 @@ const AttendanceTable = ({ users, pagination, onChange }) => {
       dataIndex: "name",
       key: "name",
       className: "px-4 py-2",
+      render: (text, record, index) => <span>{record.firstName} {record.lastName}</span>,
     },
     {
       title: "Email",
       dataIndex: "email",
       key: "email",
       className: "px-4 py-2",
-    },
-    {
-      title: "QR",
-      dataIndex: "qr",
-      key: "qr",
-      render: (_, obj) =>
-        obj.qr === "https://hcc.com" ? (
-          <Button
-            className="bg-green-600 text-white"
-            onClick={() => handleClick(obj._id)}
-          >
-            Generate QR
-          </Button>
-        ) : (
-          <QRCode value={obj.qr} size={60} />
-        ),
     },
     ...getAttendanceColumns(users),
   ];

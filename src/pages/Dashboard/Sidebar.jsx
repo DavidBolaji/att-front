@@ -105,13 +105,13 @@ function Sidebar({ isOpen, handleToggle }) {
                   >
                     <NavLink to={"attendance"}>users Attendance</NavLink>
                   </Disclosure.Panel>
-                  <Disclosure.Panel
+                  {/* <Disclosure.Panel
                     className={
                       "flex items-center mb-3 p-1 cursor-pointer text-sm font-medium text-gray-900 rounded-md hover:bg-gray-50"
                     }
                   >
                     <NavLink to={"card"}>users Card</NavLink>
-                  </Disclosure.Panel>
+                  </Disclosure.Panel> */}
                 </div>
               </Transition>
             </Disclosure>
