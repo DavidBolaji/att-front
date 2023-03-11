@@ -60,19 +60,19 @@ const UserTable = ({ users, pagination, onChange }) => {
       key: "address",
       className: "px-4 py-2",
     },
-    {
-      title: "DOB",
-      dataIndex: "dob",
-      key: "dob",
-      className: "px-4 py-2",
-      render: (_, obj) => (
-        <ul className="list-disc pl-4">
-          <p className="text-green-500">
-            {format(new Date(obj.DOB), "do MMM',' yyyy")}
-          </p>
-        </ul>
-      ),
-    },
+    // {
+    //   title: "DOB",
+    //   dataIndex: "dob",
+    //   key: "dob",
+    //   className: "px-4 py-2",
+    //   render: (_, obj) => (
+    //     <ul className="list-disc pl-4">
+    //       <p className="text-green-500">
+    //         {format(new Date(obj.DOB), "do MMM',' yyyy")}
+    //       </p>
+    //     </ul>
+    //   ),
+    // },
     ...dateColumns,
     // {
     //   title: "Attendance",

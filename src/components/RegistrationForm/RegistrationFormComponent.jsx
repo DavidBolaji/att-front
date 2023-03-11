@@ -8,22 +8,62 @@ import AuthContext from "../../store/AuthContext";
 
 countries.registerLocale(en);
 
-// import { countriesList } from "./countriesList";
+const genderOptions = [
+  {value: '', label: 'Select Gender'},
+  { value: 'M', label: 'Male' },
+  { value: 'F', label: 'Female' },
+];
 
+const roleOptions = [
+  {value: '', label: 'Select Role'},
+  { value: 'Member', label: 'Member' },
+  { value: 'Worker', label: 'Worker' },
+];
+
+
+// import { countriesList } from "./countriesList";
+["firstName","lastName",	"gender", "address", "nbusStop", "addressGroup", "email",	"phone", "DOB",	"month", "role", "occupation"];
 const initialValues = {
-  name: "",
-  email: "",
+  firstName: "",
+  lastName: "",
+  gender: "",
   address: "",
+  nbusStop: "",
+  addressGroup: "",
+  email: "",
   phone: "",
   DOB: "",
-  password: "",
+  month: "",
+  role: "",
+  occupation: "",
 };
 
 const validate = (values) => {
   const errors = {};
 
-  if (!values.name) {
-    errors.name = "Name is required";
+  if (!values.firstName) {
+    errors.name = "First Name is required";
+  }
+
+  if (!values.lastName) {
+    errors.name = "Last Name is required";
+  }
+
+  if (!values.gender) {
+    errors.name = "Gender is required";
+  }
+
+  if (!values.address) {
+    errors.address = "Address is required";
+  }
+
+
+  if (!values.nbusStop) {
+    errors.name = "Nearest bus Stop is required";
+  }
+
+  if (!values.addressGroup) {
+    errors.name = "Gender is required";
   }
 
   if (!values.email) {
@@ -32,9 +72,6 @@ const validate = (values) => {
     errors.email = "Invalid email address";
   }
 
-  if (!values.address) {
-    errors.address = "Address is required";
-  }
 
   if (!values.phone) {
     errors.phone = "Phone number is required";
@@ -45,6 +82,21 @@ const validate = (values) => {
   if (!values.DOB) {
     errors.DOB = "Date of birth is required";
   }
+
+
+  if (!values.month) {
+    errors.month = "Month of birth is required";
+  }
+
+  if (!values.role) {
+    errors.role = "Role is required";
+  }
+
+  if (!values.occupation) {
+    errors.occupation = "Occupation is required";
+  }
+
+
 
   return errors;
 };
@@ -80,26 +132,144 @@ const RegistrationFormComponent = () => {
       <form onSubmit={formik.handleSubmit}>
         <div className="mb-4">
           <label htmlFor="name" className="block font-medium mb-2">
-            Name
+            First Name
           </label>
           <input
-            id="name"
-            name="name"
+            id="firstName"
+            name="firstName"
             type="text"
-            placeholder="Enter your name"
-            value={formik.values.name}
+            placeholder="Enter your first name"
+            value={formik.values.firstName}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             className={`w-full p-2 rounded-md border ${
-              formik.touched.name && formik.errors.name
+              formik.touched.firstName && formik.errors.firstName
                 ? "border-red-500"
                 : "border-gray-300"
             }`}
           />
-          {formik.touched.name && formik.errors.name ? (
+          {formik.touched.firstName && formik.errors.firstName ? (
             <div className="flex items-center mt-1">
               <FaTimesCircle className="text-red-500 mr-2" />
-              <span className="text-red-500">{formik.errors.name}</span>
+              <span className="text-red-500">{formik.errors.firstName}</span>
+            </div>
+          ) : null}
+        </div>
+        <div className="mb-4">
+          <label htmlFor="name" className="block font-medium mb-2">
+            Last Name
+          </label>
+          <input
+            id="lastName"
+            name="lastName"
+            type="text"
+            placeholder="Enter your Last name"
+            value={formik.values.lastName}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className={`w-full p-2 rounded-md border ${
+              formik.touched.lastName && formik.errors.lastName
+                ? "border-red-500"
+                : "border-gray-300"
+            }`}
+          />
+          {formik.touched.lastName && formik.errors.lastName ? (
+            <div className="flex items-center mt-1">
+              <FaTimesCircle className="text-red-500 mr-2" />
+              <span className="text-red-500">{formik.errors.lastName}</span>
+            </div>
+          ) : null}
+        </div>
+        <div className="mb-4">
+            <label htmlFor="gender" className="block font-medium mb-2">Gender</label>
+            <select name="gender" id="gender" onChange={formik.handleChange} value={formik.values.gender} className={`w-full p-2 rounded-md border ${
+              formik.touched.gender && formik.errors.gender
+                ? "border-red-500"
+                : "border-gray-300"
+            }`}>
+              {genderOptions.map(({ value, label }) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+            {formik.touched.gender && formik.errors.gender ? (
+            <div className="flex items-center mt-1">
+              <FaTimesCircle className="text-red-500 mr-2" />
+              <span className="text-red-500">{formik.errors.gender}</span>
+            </div>
+          ) : null}
+        </div>
+        <div className="mb-4">
+          <label htmlFor="address" className="block font-medium mb-2">
+            Address
+          </label>
+          <textarea
+            id="address"
+            name="address"
+            placeholder="Enter your address"
+            value={formik.values.address}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className={`w-full p-2 rounded-md border ${
+              formik.touched.address && formik.errors.address
+                ? "border-red-500"
+                : "border-gray-300"
+            }`}
+          />
+          {formik.touched.address && formik.errors.address ? (
+            <div className="flex items-center mt-1">
+              <FaTimesCircle className="text-red-500 mr-2" />
+              <span className="text-red-500">{formik.errors.address}</span>
+            </div>
+          ) : null}
+        </div>
+        <div className="mb-4">
+          <label htmlFor="address" className="block font-medium mb-2">
+            Nearest Bus Stop
+          </label>
+          <textarea
+            id="nbusStop"
+            name="nbusStop"
+            placeholder="Enter your Nearest Bus stop"
+            value={formik.values.nbusStop}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className={`w-full p-2 rounded-md border ${
+              formik.touched.nbusStop && formik.errors.nbusStop
+                ? "border-red-500"
+                : "border-gray-300"
+            }`}
+          />
+          {formik.touched.nbusStop && formik.errors.nbusStop ? (
+            <div className="flex items-center mt-1">
+              <FaTimesCircle className="text-red-500 mr-2" />
+              <span className="text-red-500">{formik.errors.nbusStop}</span>
+            </div>
+          ) : null}
+        </div>
+        <div className="mb-4">
+          <label htmlFor="name" className="block font-medium mb-2">
+            Address Group
+          </label>
+          <input
+            id="addressGroup"
+            name="addressGroup"
+            type="text"
+            placeholder="Enter your Address Group"
+            value={formik.values.addressGroup}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className={`w-full p-2 rounded-md border ${
+              formik.touched.addressGroup && formik.errors.addressGroup
+                ? "border-red-500"
+                : "border-gray-300"
+            }`}
+          />
+          {formik.touched.addressGroup && formik.errors.addressGroup ? (
+            <div className="flex items-center mt-1">
+              <FaTimesCircle className="text-red-500 mr-2" />
+              <span className="text-red-500">{formik.errors.addressGroup}</span>
             </div>
           ) : null}
         </div>
@@ -128,30 +298,7 @@ const RegistrationFormComponent = () => {
             </div>
           ) : null}
         </div>
-        <div className="mb-4">
-          <label htmlFor="address" className="block font-medium mb-2">
-            Address
-          </label>
-          <textarea
-            id="address"
-            name="address"
-            placeholder="Enter your address"
-            value={formik.values.address}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            className={`w-full p-2 rounded-md border ${
-              formik.touched.address && formik.errors.address
-                ? "border-red-500"
-                : "border-gray-300"
-            }`}
-          />
-          {formik.touched.address && formik.errors.address ? (
-            <div className="flex items-center mt-1">
-              <FaTimesCircle className="text-red-500 mr-2" />
-              <span className="text-red-500">{formik.errors.address}</span>
-            </div>
-          ) : null}
-        </div>
+        
         <div className="mb-4">
           <label htmlFor="phone" className="block font-medium mb-2">
             Phone Number
@@ -185,7 +332,7 @@ const RegistrationFormComponent = () => {
           <input
             id="DOB"
             name="DOB"
-            type="date"
+            type="text"
             placeholder="Enter your date of birth"
             value={formik.values.DOB}
             onChange={formik.handleChange}
@@ -200,6 +347,76 @@ const RegistrationFormComponent = () => {
             <div className="flex items-center mt-1">
               <FaTimesCircle className="text-red-500 mr-2" />
               <span className="text-red-500">{formik.errors.DOB}</span>
+            </div>
+          ) : null}
+        </div>
+        <div className="mb-4">
+            <label htmlFor="month" className="block font-medium mb-2">Month (MM)</label>
+            <input
+              type="text"
+              name="month"
+              id="month"
+              placeholder="Enter Month"
+              // maxLength="2" // restrict input to 2 characters
+              // pattern="^(0?[1-9]|1[0-2])$" // enforce "MM" format with HTML5 validation
+              value={formik.values.month}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className={`w-full p-2 rounded-md border ${
+              formik.touched.month && formik.errors.month
+                ? "border-red-500"
+                : "border-gray-300"
+            }`}
+            />
+             {formik.touched.month && formik.errors.month ? (
+            <div className="flex items-center mt-1">
+              <FaTimesCircle className="text-red-500 mr-2" />
+              <span className="text-red-500">{formik.errors.month}</span>
+            </div>
+          ) : null}
+        </div>
+        <div className="mb-4">
+            <label htmlFor="role" className="block font-medium mb-2">Role</label>
+            <select name="role" id="role" onChange={formik.handleChange} value={formik.values.role} className={`w-full p-2 rounded-md border ${
+              formik.touched.role && formik.errors.role
+                ? "border-red-500"
+                : "border-gray-300"
+            }`}>
+              {roleOptions.map(({ value, label }) => (
+                <option key={value} value={value}>
+                  {label}
+                </option>
+              ))}
+            </select>
+            {formik.touched.role && formik.errors.role ? (
+            <div className="flex items-center mt-1">
+              <FaTimesCircle className="text-red-500 mr-2" />
+              <span className="text-red-500">{formik.errors.role}</span>
+            </div>
+          ) : null}
+        </div>
+        <div className="mb-4">
+          <label htmlFor="name" className="block font-medium mb-2">
+            Occupation
+          </label>
+          <input
+            id="occupation"
+            name="occupation"
+            type="text"
+            placeholder="Enter your occupation"
+            value={formik.values.occupation}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className={`w-full p-2 rounded-md border ${
+              formik.touched.occupation && formik.errors.occupation
+                ? "border-red-500"
+                : "border-gray-300"
+            }`}
+          />
+          {formik.touched.occupation && formik.errors.occupation ? (
+            <div className="flex items-center mt-1">
+              <FaTimesCircle className="text-red-500 mr-2" />
+              <span className="text-red-500">{formik.errors.occupation}</span>
             </div>
           ) : null}
         </div>

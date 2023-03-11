@@ -43,16 +43,23 @@ const handleCsv = async (file) => {
     if (newData.length < 1) {
       return createToast("Please load file again", { type: "info" });
     }
-    const keys = ["name", "email", "phone", "address", "DOB"];
+    const keys = ["firstName","lastName",	"gender", "address", "nbusStop", "addressGroup", "email",	"phone", "DOB",	"month", "role", "occupation"];
     const jsonData = arrayToObjects(newData, keys);
     const nData = jsonData.map((data) => {
       return {
-        name: data.name,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        gender: data.gender,
+        address: data.address,
+        nbusStop: data.nbusStop,
+        addressGroup: data.addressGroup,
         email: data.email,
         phone: data.phone,
-        address: data.address,
         DOB: data.DOB,
-        password: "hccForLife2023",
+        month: data.month,
+        occupation: data.occupation,
+        role: data.role,
+        password: "hccForLife2023"
       };
     });
     postData("user/register", nData);

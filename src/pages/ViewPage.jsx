@@ -19,6 +19,7 @@ const ViewPage = () => {
       dataIndex: "name",
       key: "name",
       className: "px-4 py-2",
+      render: (text, record, index) => <span>{record.firstName} {record.lastName}</span>,
     },
     {
       title: "Email",
@@ -54,19 +55,19 @@ const ViewPage = () => {
           <QRCode value={obj.qr} size={60} />
         ),
     },
-    {
-      title: "DOB",
-      dataIndex: "dob",
-      key: "dob",
-      className: "px-4 py-2",
-      render: (_, obj) => (
-        <ul className="list-disc pl-4">
-          <p className="text-green-500">
-            {format(new Date(obj.DOB), "do MMM',' yyyy")}
-          </p>
-        </ul>
-      ),
-    },
+    // {
+    //   title: "DOB",
+    //   dataIndex: "dob",
+    //   key: "dob",
+    //   className: "px-4 py-2",
+    //   render: (_, obj) => (
+    //     <ul className="list-disc pl-4">
+    //       <p className="text-green-500">
+    //         {format(new Date(obj.DOB), "do MMM',' yyyy")}
+    //       </p>
+    //     </ul>
+    //   ),
+    // },
     // ...dateColumns,
     // {
     //   title: "Attendance",
