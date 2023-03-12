@@ -8,7 +8,7 @@ import { exportToExcel } from "../utils/helpers";
 
 // import QRCode from "qrcode.react";
 
-const AttendanceTable = ({ users, pagination, onChange }) => {
+const AttendanceTable = ({ users, pagination, onChange, loading }) => {
   const handleClick = async (id) => {
     const url = `${import.meta.env.VITE_FRONT}?id=${id}`;
     const req = Axios.put(`/user/update?url=${url}`);
@@ -20,12 +20,15 @@ const AttendanceTable = ({ users, pagination, onChange }) => {
   };
 
   const getTimeFromDateStr = (dateStr) => {
-    const dateObj = new Date(dateStr);
-    const time = format(dateObj, 'h:mm:ss a');
-    return time;
+      const dateObj = new Date(dateStr);
+      const time = format(dateObj, 'h:mm a');
+      return time;
   }
 
   const timeToWord = (isoDate) => {
+    if(typeof isoDate === "undefined") {
+      return "5"
+    }
     const parsedDate = parseISO(isoDate);
     const dateWithoutTime = formatISO(parsedDate, { representation: "date" });
     const dateToWord = format(new Date(dateWithoutTime), "do MMM',' yyyy");
@@ -47,22 +50,26 @@ const AttendanceTable = ({ users, pagination, onChange }) => {
   }
 
   function getAttendanceColumns(userData) {
-    console.log(userData)
     const dates = getUniqueDates(userData);
-    console.log(dates)
-    return dates.map((date) => ({
+    return dates.map((date, index) => ({
       title: date,
       dataIndex: "date",
       key: "date",
-      render: (_, obj) => (
+      render: (_, obj, i) => (
         <>
-          {obj?.attendance.some((dat) => timeToWord(dat.createdAt) === date)
-            ? obj?.attendance.map(dat => getTimeFromDateStr(dat.createdAt))
-            : "_"}
+       
+        {timeToWord(obj?.attendance[index]?.createdAt) === date
+        ? getTimeFromDateStr(obj.attendance[index]?.createdAt)
+        : "_"
+        }     
         </>
       ),
     }));
   }
+
+  // {obj?.attendance.some((dat) => timeToWord(dat.createdAt) === date)
+  //   ? obj?.attendance.map((dat, i) => getTimeFromDateStr(dat.createdAt))[0]
+  //   : "_"}
 
   function getUserData(userData) {
     return userData.map((record) => {
@@ -133,6 +140,7 @@ const AttendanceTable = ({ users, pagination, onChange }) => {
                 onChange={onChange}
                 rowKey="qr"
                 size="sm"
+                loading={loading}
                 // scroll={{
                 //   y: 240,
                 // }}

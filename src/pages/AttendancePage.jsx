@@ -4,6 +4,7 @@ import Axios from "../api/auth";
 import { Button, DatePicker, Pagination, Skeleton, Space } from "antd";
 import AttendanceTable from "../components/AttendanceTable";
 import { exportToExcel } from "../utils/helpers";
+import { set } from "date-fns/esm";
 
 const { RangePicker } = DatePicker;
 
@@ -11,7 +12,7 @@ const AttendancePage = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useOutletContext();
   // const usersAttendance = useLoaderData();
   const [user, setUser] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(50);
   const [total, setTotal] = useState(0);
@@ -23,22 +24,27 @@ const AttendancePage = () => {
   const fetchData = async (page, pageSize, start, end) => {
     // This is where you would make an API call to fetch data for the current page and page size
     // You can update the `dataSource` and `pagination` state variables based on the response
-    !loading && setLoading((prev) => !prev);
+    setLoading(prev => !prev)
     // Example API call using fetch:
     const req = await Axios.get(
       `/user/find/all?filter=${start}&end=${end}&page=${page}&limit=${pageSize}`
     );
-    if (req.status) {
-      setUser([...req?.data?.data]);
-      setLoading((prev) => !prev);
-      setTotal(req.data.totalCount);
-    } else {
-      console.log("Something went wrong");
-    }
+    setTimeout(() => {
+      if (req.status) {
+        setUser([...req?.data?.data]);
+        setTotal(req.data.totalCount);
+        setLoading(prev => !prev)
+        return true;
+      } else {
+        console.log("Something went wrong");
+        setLoading(prev => !prev)
+        return false;
+      }
+    },10)
+    
   };
 
   async function handleTableChange(pagination) {
-    console.log("changed");
     setCurrentPage(pagination.current);
     setPageSize(pagination.pageSize);
     await fetchData(
@@ -60,6 +66,7 @@ const AttendancePage = () => {
       startDate,
       endDate
     );
+   
   };
 
   const pagination = {
@@ -67,7 +74,7 @@ const AttendancePage = () => {
     pageSize: pageSize,
     total: total,
     showSizeChanger: true,
-    pageSizeOptions: ["10", "20", "30", "40", "50", "100"],
+    pageSizeOptions: ["10", "20", "30", "40", "50", "100", "200"],
   };
 
   return (

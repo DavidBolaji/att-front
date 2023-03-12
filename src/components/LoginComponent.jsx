@@ -52,9 +52,9 @@ const LoginComponent = () => {
     if (formValid) {
       // setLoading((prev) => !prev);
       // TODO: submit the login form to the server
-      const res = await ctx.onLogin(email, password);
+      const res = ctx.onLogin(email, password);
       if (res) {
-        setTimeout(() => navigate("/dashboard"), 2000);
+        setTimeout(() => navigate("/dashboard"), 50);
       }
     }
   };

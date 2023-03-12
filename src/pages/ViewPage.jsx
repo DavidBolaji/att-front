@@ -85,7 +85,6 @@ const ViewPage = () => {
     //   ),
     // },
   ];
-  console.log(users);
   const [user, setUser] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -176,7 +175,6 @@ export default ViewPage;
 export async function loader() {
   try {
     const response = await Axios.get("/user/all");
-    console.log(response);
     if (response.status === 200) {
       return {
         user: response.data.docs,
