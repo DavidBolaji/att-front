@@ -1,5 +1,5 @@
 import React from "react";
-import { format, formatISO, parseISO } from "date-fns";
+import { format, formatISO, parse, parseISO } from "date-fns";
 import { Button, QRCode, Table } from "antd";
 import Axios from "../api/auth";
 import HCC from "../assets/hcc.png";
@@ -46,22 +46,39 @@ const AttendanceTable = ({ users, pagination, onChange, loading }) => {
       };
     });
 
-    return [...new Set(newD.map((d) => d.createdAt))];
+    const d = [...new Set(newD.map((d) => d.createdAt))];
+    return d?.sort((a,b) => {
+     
+    const dateA = parse(a.replace(/(st|nd|rd|th)/, ''), 'd MMM, yyyy', new Date());
+    // Format the date as a string for display (optional)
+    const formattedDateA = format(dateA, 'yyyy-MM-dd');
+
+    const dateB = parse(b.replace(/(st|nd|rd|th)/, ''), 'd MMM, yyyy', new Date());
+
+    // Format the date as a string for display (optional)
+    const formattedDateB = format(dateB, 'yyyy-MM-dd');
+    return new Date(formattedDateA) - new Date(formattedDateB);
+    })
   }
 
   function getAttendanceColumns(userData) {
     const dates = getUniqueDates(userData);
-    return dates.map((date, index) => ({
+
+    return [...dates].map((date, index) => ({
       title: date,
       dataIndex: "date",
       key: "date",
       render: (_, obj, i) => (
         <>
-       
-        {timeToWord(obj?.attendance[index]?.createdAt) === date
+        {/* {JSON.stringify(obj?.attendance)} */}
+        {obj?.attendance.some(e => timeToWord(e?.createdAt) === date)
+        ? getTimeFromDateStr(obj?.attendance[obj?.attendance.findIndex((e) => timeToWord(e?.createdAt) === date)]?.createdAt)
+        : "_"
+        }
+        {/* {timeToWord(obj?.attendance[index]?.createdAt) === date
         ? getTimeFromDateStr(obj.attendance[index]?.createdAt)
         : "_"
-        }     
+        }      */}
         </>
       ),
     }));

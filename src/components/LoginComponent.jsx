@@ -54,7 +54,7 @@ const LoginComponent = () => {
       // TODO: submit the login form to the server
       const res = ctx.onLogin(email, password);
       if (res) {
-        setTimeout(() => navigate("/dashboard"), 50);
+        setTimeout(() => navigate("/dashboard"), 3000);
       }
     }
   };
