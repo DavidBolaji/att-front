@@ -23,15 +23,15 @@ const latest = (date, arrays) => {
     const empty = [];
     arrays.forEach(array => {
     const attendanceObject = {};
-    attendanceObject["DOB"] = array.DOB;
     attendanceObject["_id"] = array._id;
+    attendanceObject["DOB"] = array.DOB;
+    attendanceObject["month"] = array.month;
     attendanceObject["address"] = array.address;
     attendanceObject["addressGroup"] = array.addressGroup;
     attendanceObject["email"] = array.email;
     attendanceObject["firstName"] = array.firstName;
     attendanceObject["lastName"] = array.lastName;
     attendanceObject["gender"] = array.gender;
-    attendanceObject["month"] = array.month;
     attendanceObject["occupation"] = array.occupation;
     attendanceObject["phone"] = array.phone;
     attendanceObject["nbusStop"] = array.nbusStop;
