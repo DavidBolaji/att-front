@@ -19,20 +19,23 @@ export const ContextAuth = (props) => {
   //   const { $toast } = useToasts();
 
   const loginContext = async (email, password) => {
-    const req = await login(email, password);
-    if (req.token) {
-      toast.success("Login Successful");
-      setUser(req.user);
-      setToken(req.token);
-      localStorage.setItem("user", JSON.stringify(req.user));
-      localStorage.setItem("token", JSON.stringify(req.token));
-      setLoggedIn(true);
-      return true;
-    } else if (req.e) {
-      toast.error(req.e);
-      return false;
-    } else {
-      toast.error("please check your network");
+    try {
+      const req = await login(email, password);
+      if (req.token) {
+        setUser(req.user);
+        setToken(req.token);
+        localStorage.setItem("user", JSON.stringify(req.user));
+        localStorage.setItem("token", JSON.stringify(req.token));
+        setLoggedIn(true);
+        toast.success("Login Successful");
+        return true;
+      } else {
+        console.log('entered')
+        toast.error(req?.response?.data?.e)
+      }
+    }catch(e) {
+      console.log(e)
+      toast.error(e);
       return false;
     }
   };
@@ -40,12 +43,12 @@ export const ContextAuth = (props) => {
   const registerContext = async (email, password) => {
     const req = await register(email, password);
     if (req.token) {
-      toast.success("Login Successful");
       setUser(req.user);
       setToken(req.token);
       localStorage.setItem("user", JSON.stringify(req.user));
       localStorage.setItem("token", JSON.stringify(req.token));
       setLoggedIn(true);
+      toast.success("Registration Successful");
       return true;
     } else if (req.e) {
       toast.error(req.e);
@@ -56,13 +59,17 @@ export const ContextAuth = (props) => {
     }
   };
 
-  const logoutContext = (email, password) => {
-    setUser({});
-    setToken(null);
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
-    setLoggedIn("false");
-    return true;
+  const logoutContext = async () => {
+    // await register(email, password);
+    logout().then(() => {
+      // setUser({});
+      // setToken(null);
+      // localStorage.removeItem("user");
+      // localStorage.removeItem("token");
+      // setLoggedIn("false");
+      return true;
+    });
+  
   };
 
   return (

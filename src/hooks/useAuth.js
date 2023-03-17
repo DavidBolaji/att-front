@@ -24,8 +24,19 @@ const useAuth = () => {
     }
   };
 
+  const logout = async () => {
+    try {
+      const response = await Axios.post("/user/logout");
+      console.log(response)
+      return response.data;
+    } catch (error) {
+      // console.log(error)
+      return error;
+    }
+  };
 
-  return { login, register };
+
+  return { login, register, logout };
 };
 
 export default useAuth;

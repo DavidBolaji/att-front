@@ -18,6 +18,7 @@ const roleOptions = [
   {value: '', label: 'Select Role'},
   { value: 'Member', label: 'Member' },
   { value: 'Worker', label: 'Worker' },
+  { value: 'Admin', label: 'Admin' },
 ];
 
 
@@ -108,7 +109,7 @@ const RegistrationFormComponent = () => {
     initialValues,
     validate,
     onSubmit: async (values, { resetForm }) => {
-      const res = ctx.onRegister({ ...values, password: "hcclifecenter" });
+      const res = ctx.onRegister({ ...values, password: import.meta.env.VITE_PASSWORD });
       if (res.status) {
         setSuccess(true);
       }

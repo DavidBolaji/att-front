@@ -59,7 +59,7 @@ const handleCsv = async (file) => {
         month: data.month,
         occupation: data.occupation,
         role: data.role,
-        password: "hccForLife2023"
+        password: import.meta.env.VITE_PASSWORD
       };
     });
     postData("user/register", nData);

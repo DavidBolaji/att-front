@@ -9,11 +9,7 @@ import Layout from "../components/Layout";
 const CardPage = () => {
   const {user} = useLoaderData();
 
-  console.log(user)
-
-
   return (
-    
       <Suspense 
         fallback={
           <div className="w-full h-screen flex items-center justify-center">

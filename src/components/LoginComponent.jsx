@@ -4,6 +4,7 @@ import AuthContext from "../store/AuthContext";
 import InputComponent from "./Input/InputComponent";
 import { Link } from "react-router-dom";
 import { message } from "antd";
+import { toast } from "react-toast";
 
 const LoginComponent = () => {
   const [email, setEmail] = useState("");
@@ -52,10 +53,11 @@ const LoginComponent = () => {
     if (formValid) {
       // setLoading((prev) => !prev);
       // TODO: submit the login form to the server
-      const res = ctx.onLogin(email, password);
+      const res = await ctx.onLogin(email, password);
+
       if (res) {
         setTimeout(() => navigate("/dashboard"), 3000);
-      }
+      } 
     }
   };
 
@@ -110,14 +112,14 @@ const LoginComponent = () => {
             </div>
 
             <div className="flex items-center justify-between">
-              <div className="text-sm">
+              {/* <div className="text-sm">
                 <a
                   href="#"
                   className="font-medium text-green-600 hover:text-green-500"
                 >
                   Forgot your password?
                 </a>
-              </div>
+              </div> */}
             </div>
 
             <div>
@@ -136,7 +138,7 @@ const LoginComponent = () => {
           </form>
 
           <div className="text-sm mt-6">
-            <p className="text-gray-600">
+            {/* <p className="text-gray-600">
               Don't have an account?{" "}
               <Link
                 to="/register"
@@ -144,7 +146,7 @@ const LoginComponent = () => {
               >
                 Sign up here
               </Link>
-            </p>
+            </p> */}
           </div>
         </div>
       </div>
