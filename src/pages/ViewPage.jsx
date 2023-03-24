@@ -19,7 +19,11 @@ const ViewPage = () => {
       dataIndex: "name",
       key: "name",
       className: "px-4 py-2",
-      render: (text, record, index) => <span>{record.firstName} {record.lastName}</span>,
+      render: (text, record, index) => (
+        <span>
+          {record.firstName} {record.lastName}
+        </span>
+      ),
     },
     // {
     //   title: "Email",
@@ -133,7 +137,7 @@ const ViewPage = () => {
     pageSize: pageSize,
     total: total,
     showSizeChanger: true,
-    pageSizeOptions: ["10", "20", "30", "40", "50", "200"],
+    pageSizeOptions: ["10", "20", "30", "40", "50", "200", "300"],
   };
   return (
     <main

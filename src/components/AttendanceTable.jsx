@@ -20,14 +20,14 @@ const AttendanceTable = ({ users, pagination, onChange, loading }) => {
   };
 
   const getTimeFromDateStr = (dateStr) => {
-      const dateObj = new Date(dateStr);
-      const time = format(dateObj, 'h:mm a');
-      return time;
-  }
+    const dateObj = new Date(dateStr);
+    const time = format(dateObj, "h:mm a");
+    return time;
+  };
 
   const timeToWord = (isoDate) => {
-    if(typeof isoDate === "undefined") {
-      return "5"
+    if (typeof isoDate === "undefined") {
+      return "5";
     }
     const parsedDate = parseISO(isoDate);
     const dateWithoutTime = formatISO(parsedDate, { representation: "date" });
@@ -47,18 +47,25 @@ const AttendanceTable = ({ users, pagination, onChange, loading }) => {
     });
 
     const d = [...new Set(newD.map((d) => d.createdAt))];
-    return d?.sort((a,b) => {
-     
-    const dateA = parse(a.replace(/(st|nd|rd|th)/, ''), 'd MMM, yyyy', new Date());
-    // Format the date as a string for display (optional)
-    const formattedDateA = format(dateA, 'yyyy-MM-dd');
+    return d?.sort((a, b) => {
+      const dateA = parse(
+        a.replace(/(st|nd|rd|th)/, ""),
+        "d MMM, yyyy",
+        new Date()
+      );
+      // Format the date as a string for display (optional)
+      const formattedDateA = format(dateA, "yyyy-MM-dd");
 
-    const dateB = parse(b.replace(/(st|nd|rd|th)/, ''), 'd MMM, yyyy', new Date());
+      const dateB = parse(
+        b.replace(/(st|nd|rd|th)/, ""),
+        "d MMM, yyyy",
+        new Date()
+      );
 
-    // Format the date as a string for display (optional)
-    const formattedDateB = format(dateB, 'yyyy-MM-dd');
-    return new Date(formattedDateA) - new Date(formattedDateB);
-    })
+      // Format the date as a string for display (optional)
+      const formattedDateB = format(dateB, "yyyy-MM-dd");
+      return new Date(formattedDateA) - new Date(formattedDateB);
+    });
   }
 
   function getAttendanceColumns(userData) {
@@ -70,12 +77,17 @@ const AttendanceTable = ({ users, pagination, onChange, loading }) => {
       key: "date",
       render: (_, obj, i) => (
         <>
-        {/* {JSON.stringify(obj?.attendance)} */}
-        {obj?.attendance.some(e => timeToWord(e?.createdAt) === date)
-        ? getTimeFromDateStr(obj?.attendance[obj?.attendance.findIndex((e) => timeToWord(e?.createdAt) === date)]?.createdAt)
-        : "_"
-        }
-        {/* {timeToWord(obj?.attendance[index]?.createdAt) === date
+          {/* {JSON.stringify(obj?.attendance)} */}
+          {obj?.attendance.some((e) => timeToWord(e?.createdAt) === date)
+            ? getTimeFromDateStr(
+                obj?.attendance[
+                  obj?.attendance.findIndex(
+                    (e) => timeToWord(e?.createdAt) === date
+                  )
+                ]?.createdAt
+              )
+            : "_"}
+          {/* {timeToWord(obj?.attendance[index]?.createdAt) === date
         ? getTimeFromDateStr(obj.attendance[index]?.createdAt)
         : "_"
         }      */}
@@ -127,7 +139,11 @@ const AttendanceTable = ({ users, pagination, onChange, loading }) => {
       dataIndex: "name",
       key: "name",
       className: "px-4 py-2",
-      render: (text, record, index) => <span>{record.firstName} {record.lastName}</span>,
+      render: (text, record, index) => (
+        <span>
+          {record.firstName} {record.lastName}
+        </span>
+      ),
     },
     {
       title: "Email",
@@ -135,6 +151,15 @@ const AttendanceTable = ({ users, pagination, onChange, loading }) => {
       key: "email",
       className: "px-4 py-2",
     },
+    // {
+    //   title: "Role",
+    //   dataIndex: "role",
+    //   key: "role",
+    //   className: "px-4 py-2",
+    //   render: (text, record, index) => (
+    //     <span>{record.role[0] === "Admin" ? "Worker" : record.role[0]}</span>
+    //   ),
+    // },
     ...getAttendanceColumns(users),
   ];
 

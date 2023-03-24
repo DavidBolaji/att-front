@@ -109,7 +109,7 @@ const RegistrationFormComponent = () => {
     initialValues,
     validate,
     onSubmit: async (values, { resetForm }) => {
-      const res = ctx.onRegister({ ...values, password: import.meta.env.VITE_PASSWORD });
+      const res = await ctx.onRegister({ ...values, password: import.meta.env.VITE_PASSWORD });
       if (res.status) {
         setSuccess(true);
       }

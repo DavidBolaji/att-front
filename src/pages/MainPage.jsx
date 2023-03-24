@@ -43,25 +43,39 @@ const handleCsv = async (file) => {
     if (newData.length < 1) {
       return createToast("Please load file again", { type: "info" });
     }
-    const keys = ["firstName","lastName",	"gender", "address", "nbusStop", "addressGroup", "email",	"phone", "DOB",	"month", "role", "occupation"];
+    const keys = [
+      "firstName",
+      "lastName",
+      "email",
+      "phone",
+      "gender",
+      "DOB",
+      "month",
+      "role",
+      "occupation",
+      "address",
+      "nbusStop",
+      "addressGroup",
+    ];
     const jsonData = arrayToObjects(newData, keys);
     const nData = jsonData.map((data) => {
       return {
         firstName: data.firstName,
         lastName: data.lastName,
+        email: data.email,
+        phone: data.phone,
         gender: data.gender,
+        DOB: data.DOB,
+        month: data.month,
+        role: data.role,
+        occupation: data.occupation,
         address: data.address,
         nbusStop: data.nbusStop,
         addressGroup: data.addressGroup,
-        email: data.email,
-        phone: data.phone,
-        DOB: data.DOB,
-        month: data.month,
-        occupation: data.occupation,
-        role: data.role,
-        password: import.meta.env.VITE_PASSWORD
+        password: import.meta.env.VITE_PASSWORD,
       };
     });
+    // console.log(nData);
     postData("user/register", nData);
   };
   reader.readAsBinaryString(file);

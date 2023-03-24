@@ -24,7 +24,7 @@ const AttendancePage = () => {
   const fetchData = async (page, pageSize, start, end) => {
     // This is where you would make an API call to fetch data for the current page and page size
     // You can update the `dataSource` and `pagination` state variables based on the response
-    setLoading(prev => !prev)
+    setLoading((prev) => !prev);
     // Example API call using fetch:
     const req = await Axios.get(
       `/user/find/all?filter=${start}&end=${end}&page=${page}&limit=${pageSize}`
@@ -33,15 +33,14 @@ const AttendancePage = () => {
       if (req.status) {
         setUser([...req?.data?.data]);
         setTotal(req.data.totalCount);
-        setLoading(prev => !prev)
+        setLoading((prev) => !prev);
         return true;
       } else {
         console.log("Something went wrong");
-        setLoading(prev => !prev)
+        setLoading((prev) => !prev);
         return false;
       }
-    },10)
-    
+    }, 10);
   };
 
   async function handleTableChange(pagination) {
@@ -66,7 +65,6 @@ const AttendancePage = () => {
       startDate,
       endDate
     );
-   
   };
 
   const pagination = {
@@ -74,7 +72,7 @@ const AttendancePage = () => {
     pageSize: pageSize,
     total: total,
     showSizeChanger: true,
-    pageSizeOptions: ["10", "20", "30", "40", "50", "100", "200"],
+    pageSizeOptions: ["10", "20", "30", "40", "50", "100", "200", "300"],
   };
 
   return (
