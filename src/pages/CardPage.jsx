@@ -22,7 +22,7 @@ const CardPage = () => {
 
     loadData(id).then((res) => {
       setUser(res);
-      setLoading(false);
+      setTimout(() => setLoading(false), 3000);
     });
   }, []);
 
