@@ -4,7 +4,7 @@ import HCC from "../assets/hcc.png";
 import Axios from "../api/auth";
 import { Await, defer, useLoaderData, useParams } from "react-router-dom";
 import Layout from "../components/Layout";
-import { QRCode } from "antd";
+import { QRCode, Skeleton } from "antd";
 
 const CardPage = () => {
   const [user, setUser] = useState({});
@@ -22,7 +22,7 @@ const CardPage = () => {
     };
 
     loadData(id).then((res) => {
-      setUser(res);
+      setUser({ ...res });
       setLoading(false);
     });
   }, []);
@@ -52,26 +52,30 @@ const CardPage = () => {
               />
             </div>
 
-            <div className="flex flex-col  w-full justify-end ">
-              <p className="text-gray-600 font-medium text-right italic">
-                Name
-              </p>
-              <p className="text-gray-900 font-bold text-lg text-right text-[12px]">
-                {String(user.firstName)}
-              </p>
-              <p className="text-gray-600 font-medium text-right italic">
-                Card Number
-              </p>
-              <p className="text-gray-900 font-bold text-lg text-right text-[12px]">
-                {`**** **** **** ${id.slice(-4)}`}
-              </p>
-              <p className="text-gray-600 font-medium text-right italic">
-                Expiry Date
-              </p>
-              <p className="text-gray-900 font-bold text-lg text-right text-[12px]">
-                **/**
-              </p>
-            </div>
+            {Object.keys(user).length > 0 ? (
+              <div className="flex flex-col  w-full justify-end ">
+                <p className="text-gray-600 font-medium text-right italic">
+                  Name
+                </p>
+                <p className="text-gray-900 font-bold text-lg text-right text-[12px]">
+                  {user?.firstName} {user?.lastName}
+                </p>
+                <p className="text-gray-600 font-medium text-right italic">
+                  Card Number
+                </p>
+                <p className="text-gray-900 font-bold text-lg text-right text-[12px]">
+                  {`**** **** **** ${id.slice(-4)}`}
+                </p>
+                <p className="text-gray-600 font-medium text-right italic">
+                  Expiry Date
+                </p>
+                <p className="text-gray-900 font-bold text-lg text-right text-[12px]">
+                  **/**
+                </p>
+              </div>
+            ) : (
+              <Skeleton active={true} />
+            )}
           </div>
         </div>
       </div>
