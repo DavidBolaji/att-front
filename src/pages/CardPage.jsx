@@ -21,8 +21,8 @@ const CardPage = () => {
     };
 
     loadData(id).then((res) => {
-      setLoading(false);
       setUser(res);
+      setLoading(false);
     });
   }, []);
 
