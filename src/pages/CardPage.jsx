@@ -27,7 +27,11 @@ const CardPage = () => {
   }, []);
 
   if (loading) {
-    return <Layout />;
+    return (
+      <div className="flex h-screen w-full items-center justify-center">
+        <Layout />;
+      </div>
+    );
   }
 
   return (
@@ -36,7 +40,7 @@ const CardPage = () => {
       <Mastercard
         value={user?.qr}
         cardNumber={`**** **** **** ${id.slice(-4)}`}
-        name={`${user?.firstName} ${user?.lastName}`}
+        name={user}
         expiryDate="12/22"
       />
     </div>
