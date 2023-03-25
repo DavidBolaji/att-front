@@ -4,6 +4,7 @@ import HCC from "../assets/hcc.png";
 import Axios from "../api/auth";
 import { Await, defer, useLoaderData, useParams } from "react-router-dom";
 import Layout from "../components/Layout";
+import { QRCode } from "antd";
 
 const CardPage = () => {
   const [user, setUser] = useState({});
