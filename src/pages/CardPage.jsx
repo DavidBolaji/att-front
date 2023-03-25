@@ -43,36 +43,37 @@ const CardPage = () => {
           {/* Card Logo */}
           {/* <img src={HCC} alt="hcc" /> */}
           <div className="flex gap-5">
-            <div>
-              <QRCode
-                value={typeof value === "undefined" ? "wait" : value}
-                status={"active"}
-                className="w-full"
-                //   color={"blue"}
-              />
-            </div>
-
             {Object.keys(user).length > 0 ? (
-              <div className="flex flex-col  w-full justify-end ">
-                <p className="text-gray-600 font-medium text-right italic">
-                  Name
-                </p>
-                <p className="text-gray-900 font-bold text-lg text-right text-[12px]">
-                  {user?.firstName} {user?.lastName}
-                </p>
-                <p className="text-gray-600 font-medium text-right italic">
-                  Card Number
-                </p>
-                <p className="text-gray-900 font-bold text-lg text-right text-[12px]">
-                  {`**** **** **** ${id.slice(-4)}`}
-                </p>
-                <p className="text-gray-600 font-medium text-right italic">
-                  Expiry Date
-                </p>
-                <p className="text-gray-900 font-bold text-lg text-right text-[12px]">
-                  **/**
-                </p>
-              </div>
+              <>
+                <div>
+                  <QRCode
+                    value={user.qr}
+                    status={"active"}
+                    className="w-full"
+                    //   color={"blue"}
+                  />
+                </div>
+                <div className="flex flex-col  w-full justify-end ">
+                  <p className="text-gray-600 font-medium text-right italic">
+                    Name
+                  </p>
+                  <p className="text-gray-900 font-bold text-lg text-right text-[12px]">
+                    {user?.firstName} {user?.lastName}
+                  </p>
+                  <p className="text-gray-600 font-medium text-right italic">
+                    Card Number
+                  </p>
+                  <p className="text-gray-900 font-bold text-lg text-right text-[12px]">
+                    {`**** **** **** ${id.slice(-4)}`}
+                  </p>
+                  <p className="text-gray-600 font-medium text-right italic">
+                    Expiry Date
+                  </p>
+                  <p className="text-gray-900 font-bold text-lg text-right text-[12px]">
+                    **/**
+                  </p>
+                </div>
+              </>
             ) : (
               <Skeleton active={true} />
             )}
