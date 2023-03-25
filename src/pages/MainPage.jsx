@@ -3,6 +3,7 @@ import React, { useCallback, useRef, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import Axios from "../api/auth";
 import * as XLSX from "xlsx";
+import generateUniqueId from "generate-unique-id";
 import RegistrationFormComponent from "../components/RegistrationForm/RegistrationFormComponent";
 const { Panel } = Collapse;
 let newData;
@@ -65,10 +66,7 @@ const handleCsv = async (file) => {
         lastName: data.lastName,
         email:
           typeof data.email === "undefined"
-            ? `${(data._id + "fakeemail")
-                .split("")
-                .sort(() => Math.random() - 0.5)
-                .join("")}@notreal.com`
+            ? `${data._id + "fakeemail"}@notreal.com`
             : data.email,
         phone: data.phone,
         gender: data.gender,
