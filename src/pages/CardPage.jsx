@@ -1,53 +1,62 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import Card, { Mastercard } from "../components/Card";
 import HCC from "../assets/hcc.png";
 import Axios from "../api/auth";
-import { Await, defer, useLoaderData } from "react-router-dom";
+import { Await, defer, useLoaderData, useParams } from "react-router-dom";
 import Layout from "../components/Layout";
 
-
 const CardPage = () => {
-  const {user} = useLoaderData();
+  const [user, setUser] = useState({});
+  const [loading, setLoading] = useState(true);
+  const { id } = useParams();
+  useEffect(() => {
+    const loadData = async (params) => {
+      const id = params;
+      try {
+        const response = await Axios.get("/user/find/" + id);
+        return response.data;
+      } catch (error) {
+        return error;
+      }
+    };
+
+    loadData(id).then((res) => {
+      setLoading(false);
+      setUser(res);
+    });
+  }, []);
+
+  if (loading) {
+    return <Layout />;
+  }
 
   return (
-      <Suspense 
-        fallback={
-          <div className="w-full h-screen flex items-center justify-center">
-            <Layout />
-          </div>
-        }
-      > 
-        <Await resolve={user}>
-          {(loadedUser) => {
-            return <div className="flex flex-col w-full h-screen items-center justify-center bg-[#fafafa]">
-              <img src={HCC} alt="hcc" />
-              <Mastercard
-                value={loadedUser.qr}
-                cardNumber="**** **** **** 1234"
-                name={`${loadedUser.firstName} ${loadedUser.lastName}`}
-                expiryDate="12/22"
-              />
-          </div>
-          } }
-        </Await>
-      </Suspense>  
+    <div className="flex flex-col w-full h-screen items-center justify-center bg-[#fafafa]">
+      <img src={HCC} alt="hcc" />
+      <Mastercard
+        value={user?.qr}
+        cardNumber={`**** **** **** ${id.slice(-4)}`}
+        name={`${user?.firstName} ${user?.lastName}`}
+        expiryDate="12/22"
+      />
+    </div>
   );
 };
 
 export default CardPage;
 
-const loadData = async(params) => {
-  const id = params.id;
-  try {
-    const response = await Axios.get("/user/find/" + id);
-    return response.data;
-  } catch (error) {
-    return error;
-  }
-}
+// const loadData = async (params) => {
+//   const id = params.id;
+//   try {
+//     const response = await Axios.get("/user/find/" + id);
+//     return response.data;
+//   } catch (error) {
+//     return error;
+//   }
+// };
 
-export async function loader({ request, params }) {
- return defer({
-  user: loadData(params)
- })
-}
+// export async function loader({ request, params }) {
+//   return defer({
+//     user: loadData(params),
+//   });
+// }

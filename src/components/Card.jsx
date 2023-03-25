@@ -67,6 +67,7 @@ function Card(props) {
 export default Card;
 
 export function Mastercard({ cardNumber, name, expiryDate, value }) {
+  console.log(value);
   return (
     <div className="w-96 mx-auto bg-green-300">
       <div className="relative rounded-lg shadow-lg bg-white px-5 py-8">
@@ -75,7 +76,7 @@ export function Mastercard({ cardNumber, name, expiryDate, value }) {
         <div className="flex gap-5">
           <div>
             <QRCode
-              value={value}
+              value={typeof value === "undefined" ? "wait" : value}
               status={"active"}
               className="w-full"
               //   color={"blue"}

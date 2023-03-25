@@ -9,7 +9,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { checkAuth } from "./hooks/useAuth";
 import RegisterPage from "./pages/RegisterPage";
 import LogoutPage from "./pages/LogoutPage";
-import CardPage, { loader as cardUserLoader } from "./pages/CardPage";
+import CardPage from "./pages/CardPage";
 import ViewPage, { loader as viewUserLoader } from "./pages/ViewPage";
 import { LoaderComponent } from "./components/LoaderComponent";
 // import ViewUsersCard from "./pages/ViewUsersCard";
@@ -17,7 +17,7 @@ import { LoaderComponent } from "./components/LoaderComponent";
 const router = createBrowserRouter([
   { path: "/", element: <LoginPage /> },
   { path: "/register", element: <RegisterPage /> },
-  { path: "/:id", element: <CardPage />, loader: cardUserLoader },
+  { path: "/:id", element: <CardPage /> },
   {
     path: "/dashboard",
     element: <DashboardPage />,
