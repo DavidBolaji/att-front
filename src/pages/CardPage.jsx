@@ -24,6 +24,10 @@ const CardPage = () => {
 
     loadData(id).then((res) => {
       setUser({ ...res });
+      JSON.stringify(
+        localStorage.setItem("namer", res?.firstName + " " + res?.lastName)
+      );
+      JSON.stringify(localStorage.setItem("qr", res?.qr));
       setName(res.firstName + " " + res.lastName);
       setLoading(false);
     });
@@ -36,6 +40,7 @@ const CardPage = () => {
       </div>
     );
   }
+  console.log(Object.keys(user).length);
   return (
     <div className="flex flex-col w-full h-screen items-center justify-center bg-[#fafafa]">
       <img src={HCC} alt="hcc" />
@@ -48,7 +53,7 @@ const CardPage = () => {
               <>
                 <div>
                   <QRCode
-                    value={user?.qr}
+                    value={localStorage.getItem("qr")}
                     status={"active"}
                     className="w-full"
                     //   color={"blue"}
@@ -59,7 +64,7 @@ const CardPage = () => {
                     Name
                   </p>
                   <p className="text-gray-900 font-bold text-lg text-right text-[12px]">
-                    {name}
+                    {localStorage.getItem("namer")}
                   </p>
                   <p className="text-gray-600 font-medium text-right italic">
                     Card Number
