@@ -8,6 +8,7 @@ import { QRCode, Skeleton } from "antd";
 
 const CardPage = () => {
   const [user, setUser] = useState({});
+  const [name, setName] = useState("");
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
   useEffect(() => {
@@ -23,6 +24,7 @@ const CardPage = () => {
 
     loadData(id).then((res) => {
       setUser({ ...res });
+      setName(res.firstName + " " + res.lastName);
       setLoading(false);
     });
   }, []);
@@ -34,7 +36,6 @@ const CardPage = () => {
       </div>
     );
   }
-
   return (
     <div className="flex flex-col w-full h-screen items-center justify-center bg-[#fafafa]">
       <img src={HCC} alt="hcc" />
@@ -47,7 +48,7 @@ const CardPage = () => {
               <>
                 <div>
                   <QRCode
-                    value={user.qr}
+                    value={user?.qr}
                     status={"active"}
                     className="w-full"
                     //   color={"blue"}
@@ -58,7 +59,7 @@ const CardPage = () => {
                     Name
                   </p>
                   <p className="text-gray-900 font-bold text-lg text-right text-[12px]">
-                    {user?.firstName} {user?.lastName}
+                    {name}
                   </p>
                   <p className="text-gray-600 font-medium text-right italic">
                     Card Number
