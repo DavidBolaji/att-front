@@ -37,12 +37,49 @@ const CardPage = () => {
   return (
     <div className="flex flex-col w-full h-screen items-center justify-center bg-[#fafafa]">
       <img src={HCC} alt="hcc" />
-      <Mastercard
+      <div className="w-96 mx-auto bg-green-300">
+        <div className="relative rounded-lg shadow-lg bg-white px-5 py-8">
+          {/* Card Logo */}
+          {/* <img src={HCC} alt="hcc" /> */}
+          <div className="flex gap-5">
+            <div>
+              <QRCode
+                value={typeof value === "undefined" ? "wait" : value}
+                status={"active"}
+                className="w-full"
+                //   color={"blue"}
+              />
+            </div>
+
+            <div className="flex flex-col  w-full justify-end ">
+              <p className="text-gray-600 font-medium text-right italic">
+                Name
+              </p>
+              <p className="text-gray-900 font-bold text-lg text-right text-[12px]">
+                {String(user.firstName)}
+              </p>
+              <p className="text-gray-600 font-medium text-right italic">
+                Card Number
+              </p>
+              <p className="text-gray-900 font-bold text-lg text-right text-[12px]">
+                {`**** **** **** ${id.slice(-4)}`}
+              </p>
+              <p className="text-gray-600 font-medium text-right italic">
+                Expiry Date
+              </p>
+              <p className="text-gray-900 font-bold text-lg text-right text-[12px]">
+                **/**
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* <Mastercard
         value={user?.qr}
         cardNumber={`**** **** **** ${id.slice(-4)}`}
         namer={user}
         expiryDate="12/22"
-      />
+      /> */}
     </div>
   );
 };
