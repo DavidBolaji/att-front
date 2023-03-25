@@ -59,10 +59,17 @@ const handleCsv = async (file) => {
     ];
     const jsonData = arrayToObjects(newData, keys);
     const nData = jsonData.map((data) => {
+      console.log(data.email);
       return {
         firstName: data.firstName,
         lastName: data.lastName,
-        email: data.email,
+        email:
+          typeof data.email === "undefined"
+            ? `${(data._id + "fakeemail")
+                .split("")
+                .sort(() => Math.random() - 0.5)
+                .join("")}@notreal.com`
+            : data.email,
         phone: data.phone,
         gender: data.gender,
         DOB: data.DOB,
