@@ -40,7 +40,7 @@ const CardPage = () => {
       <Mastercard
         value={user?.qr}
         cardNumber={`**** **** **** ${id.slice(-4)}`}
-        name={user}
+        namer={user}
         expiryDate="12/22"
       />
     </div>

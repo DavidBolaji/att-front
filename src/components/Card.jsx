@@ -66,7 +66,7 @@ function Card(props) {
 
 export default Card;
 
-export function Mastercard({ cardNumber, name, expiryDate, value }) {
+export function Mastercard({ cardNumber, namer, expiryDate, value }) {
   return (
     <div className="w-96 mx-auto bg-green-300">
       <div className="relative rounded-lg shadow-lg bg-white px-5 py-8">
@@ -85,7 +85,7 @@ export function Mastercard({ cardNumber, name, expiryDate, value }) {
           <div className="flex flex-col  w-full justify-end ">
             <p className="text-gray-600 font-medium text-right italic">Name</p>
             <p className="text-gray-900 font-bold text-lg text-right text-[12px]">
-              {name?.firstName}
+              {namer?.firstName} hasan
             </p>
             <p className="text-gray-600 font-medium text-right italic">
               Card Number
