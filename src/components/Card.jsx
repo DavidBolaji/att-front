@@ -85,9 +85,7 @@ export function Mastercard({ cardNumber, name, expiryDate, value }) {
           <div className="flex flex-col  w-full justify-end ">
             <p className="text-gray-600 font-medium text-right italic">Name</p>
             <p className="text-gray-900 font-bold text-lg text-right text-[12px]">
-              {typeof name !== "undefined"
-                ? name?.firstName + " " + name?.lastName
-                : "chan"}
+              {name?.firstName}
             </p>
             <p className="text-gray-600 font-medium text-right italic">
               Card Number
