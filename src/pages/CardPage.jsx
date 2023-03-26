@@ -1,8 +1,7 @@
-import React, { Suspense, useEffect, useState } from "react";
-import Card, { Mastercard } from "../components/Card";
+import React, { useEffect, useState } from "react";
 import HCC from "../assets/hcc.png";
 import Axios from "../api/auth";
-import { Await, defer, useLoaderData, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Layout from "../components/Layout";
 import { QRCode, Skeleton } from "antd";
 
@@ -15,8 +14,11 @@ const CardPage = () => {
     const loadData = async (params) => {
       const id = params;
       try {
-        const response = await Axios.get("/user/find/" + id);
-        return response.data;
+        const res = await Axios.get("/user/find/all2");
+        if (res.data) {
+          const response = await Axios.get("/user/find/" + id);
+          return response.data;
+        }
       } catch (error) {
         return error;
       }
@@ -40,7 +42,6 @@ const CardPage = () => {
       </div>
     );
   }
-  console.log(Object.keys(user).length);
   return (
     <div className="flex flex-col w-full h-screen items-center justify-center bg-[#fafafa]">
       <img src={HCC} alt="hcc" />
