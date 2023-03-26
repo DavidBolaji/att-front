@@ -6,7 +6,7 @@ import Layout from "../components/Layout";
 import { QRCode, Skeleton } from "antd";
 
 const CardPage = () => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState([]);
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
@@ -15,22 +15,15 @@ const CardPage = () => {
       const id = params;
       try {
         const res = await Axios.get("/user/find/all2");
-        if (res.data) {
-          const response = await Axios.get("/user/find/" + id);
-          return response.data;
-        }
+        return res.data.filter((r) => r._id === id);
       } catch (error) {
         return error;
       }
     };
 
     loadData(id).then((res) => {
-      setUser({ ...res });
-      JSON.stringify(
-        localStorage.setItem("namer", res?.firstName + " " + res?.lastName)
-      );
-      JSON.stringify(localStorage.setItem("qr", res?.qr));
-      setName(res.firstName + " " + res.lastName);
+      console.log(res);
+      setUser(res);
       setLoading(false);
     });
   }, []);
@@ -50,11 +43,11 @@ const CardPage = () => {
           {/* Card Logo */}
           {/* <img src={HCC} alt="hcc" /> */}
           <div className="flex gap-5">
-            {Object.keys(user).length > 0 ? (
+            {user && Object.keys(user).length > 0 ? (
               <>
                 <div>
                   <QRCode
-                    value={localStorage.getItem("qr")}
+                    value={user[0]?.qr}
                     status={"active"}
                     className="w-full"
                     //   color={"blue"}
@@ -65,7 +58,7 @@ const CardPage = () => {
                     Name
                   </p>
                   <p className="text-gray-900 font-bold text-lg text-right text-[12px]">
-                    {localStorage.getItem("namer")}
+                    {user[0]?.firstName} {user[0]?.lastName}
                   </p>
                   <p className="text-gray-600 font-medium text-right italic">
                     Card Number
