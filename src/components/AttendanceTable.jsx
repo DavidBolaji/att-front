@@ -1,12 +1,49 @@
 import React from "react";
 import { format, formatISO, parse, parseISO } from "date-fns";
-import { Button, QRCode, Table } from "antd";
+import { Button, Table } from "antd";
 import Axios from "../api/auth";
 import HCC from "../assets/hcc.png";
 import { toast } from "react-toast";
 import { exportToExcel } from "../utils/helpers";
+import { saveAs } from "file-saver";
+import * as XLSX from "xlsx";
+import { QRCodeCanvas, QRCodeSVG } from "qrcode.react";
+import QRCode from "qrcode";
 
 // import QRCode from "qrcode.react";
+
+export const exportToExcel2 = () => {
+  const htmlTable = document.getElementById("att");
+  // const fileType =
+  //   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+  // const fileName = "data.xlsx";
+  // const resultHeader = [];
+  // const dates = [];
+  // let count = 4;
+
+  // ite.forEach((el) => {
+  //   resultHeader.push(el.title);
+  // });
+
+  // for (let v = 3; v < resultHeader.length; v++) {
+  //   dates.push(resultHeader[v]);
+  // }
+
+  // const dataToExport1 = latest(dates, newCol);
+
+  // const dataToExport = mergeUsers(dataToExport1);
+  const ws = XLSX.utils.table_to_sheet(htmlTable);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "sheet1");
+  const excelBuffer = XLSX.writeFile(wb, "data.xlsx");
+  // const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+  // const excelBuffer = XLSX.write(wb, {
+  //   bookType: "xlsx",
+  //   type: "array",
+  // });
+  // const excelBlob = new Blob([excelBuffer], { type: fileType });
+  // saveAs(excelBlob, fileName);
+};
 
 const AttendanceTable = ({ users, pagination, onChange, loading }) => {
   const handleClick = async (id) => {
@@ -152,6 +189,23 @@ const AttendanceTable = ({ users, pagination, onChange, loading }) => {
       className: "px-4 py-2",
     },
     // {
+    //   title: "QR",
+    //   dataIndex: "qr",
+    //   key: "qr",
+    //   render: (_, obj) =>
+    //     obj.qr === "https://hcc.com" ? (
+    //       <Button
+    //         className="bg-green-600 text-white"
+    //         onClick={() => handleClick(obj._id)}
+    //       >
+    //         Generate QR
+    //       </Button>
+    //     ) : (
+    //       // <QRCodeCanvas value={obj.qr} id="immm" />
+    //       <img src={QRCode.toDataURL(obj.qr)} />
+    //     ),
+    // },
+    // {
     //   title: "Role",
     //   dataIndex: "role",
     //   key: "role",
@@ -171,11 +225,13 @@ const AttendanceTable = ({ users, pagination, onChange, loading }) => {
             <Button
               className="text-white bg-green-300 -mt-10 mb-5 w-full"
               onClick={() => exportToExcel(columns, users)}
+              // onClick={() => exportToExcel2()}
             >
               Download
             </Button>
             <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
               <Table
+                id="att"
                 columns={columns}
                 dataSource={[...users]}
                 pagination={pagination}

@@ -2,6 +2,8 @@ import { saveAs } from "file-saver";
 import * as XLSX from "xlsx";
 import { format, formatISO, parseISO } from "date-fns";
 
+// qr.image("I love QR!", { type: "svg" });
+
 const getTimeFromDateStr = (dateStr) => {
   const dateObj = new Date(dateStr);
   const time = format(dateObj, "h:mm a");
@@ -28,6 +30,9 @@ const latest = (date, arrays) => {
     attendanceObject["email"] = array.email;
     attendanceObject["phone"] = array.phone;
     attendanceObject["gender"] = array.gender;
+    attendanceObject["qr"] = `=IMAGE("${array.image}", ${Number(4)},  ${Number(
+      100
+    )},  ${Number(100)})`;
     attendanceObject["DOB"] = array.DOB;
     attendanceObject["month"] = array.month;
     attendanceObject["role"] =
